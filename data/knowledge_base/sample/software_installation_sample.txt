@@ -1,0 +1,10 @@
+SAMPLE DEMONSTRATION DOCUMENT - NOT AN OFFICIAL UNIVERSITY PROCEDURE
+Title: Software Installation Troubleshooting (Sample)
+
+Problem: An installer will not start
+
+1. Check that the installer matches the device's operating system and hardware.
+2. Obtain installers only from the software publisher or a source explicitly approved by the organization.
+3. Review the displayed error and check the publisher's documented requirements.
+4. Do not disable antivirus or other security controls to make an installer run.
+5. If administrator permission is requested, contact IT rather than trying to bypass the restriction.

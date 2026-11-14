@@ -13,10 +13,13 @@ answer_question(question, history) returns ONE result dictionary:
 Flow: retrieve -> scope check -> prompt -> local LLM -> not-found check -> result
 """
 
+import re
+
 from src import config
 from src.llm_client import LLMError, generate_answer
 from src.prompt_builder import NOT_FOUND_MARKER, build_messages
 from src.retriever import relevant_results, retrieve
+from src.text_cleaner import tokenize
 
 OUT_OF_SCOPE_MESSAGE = (
     "I couldn't find information about this in the approved IT support documents, "
@@ -32,6 +35,40 @@ ERROR_MESSAGE = (
     "I can create a support ticket so the IT team can help you."
 )
 
+TECH_SUPPORT_TERMS = {
+    "account",
+    "application",
+    "browser",
+    "camera",
+    "computer",
+    "database",
+    "device",
+    "driver",
+    "email",
+    "hardware",
+    "install",
+    "installation",
+    "internet",
+    "lab",
+    "login",
+    "lms",
+    "m365",
+    "microsoft",
+    "network",
+    "outlook",
+    "password",
+    "portal",
+    "printer",
+    "security",
+    "server",
+    "software",
+    "system",
+    "teams",
+    "vpn",
+    "wifi",
+    "wireless",
+}
+
 
 def _collect_sources(chunks):
     """List each (file, page) once, with its label and best score."""
@@ -42,14 +79,15 @@ def _collect_sources(chunks):
         if key in seen:
             continue
         seen.add(key)
-        sources.append(
-            {
-                "source": chunk["source"],
-                "page": chunk["page"],
-                "label": chunk["label"],
-                "score": round(chunk["score"], 3),
-            }
-        )
+        source = {
+            "source": chunk["source"],
+            "page": chunk["page"],
+            "label": chunk["label"],
+            "score": round(chunk["score"], 3),
+        }
+        if chunk.get("metadata"):
+            source["metadata"] = chunk["metadata"]
+        sources.append(source)
     return sources
 
 
@@ -57,6 +95,43 @@ def _is_not_found(answer):
     """True if the model replied with the not-found marker (in any spacing or case)."""
     normalized = answer.upper().replace("_", " ")
     return NOT_FOUND_MARKER.replace("_", " ") in normalized
+
+
+def _is_technical_support_question(question):
+    """Distinguish unsupported IT questions from unrelated questions."""
+    return bool(TECH_SUPPORT_TERMS.intersection(tokenize(question)))
+
+
+def _has_explicit_answer_evidence(question, chunks):
+    """Require direct source evidence for credentials and contact details."""
+    question_words = set(tokenize(question))
+    context = "\n".join(chunk["text"] for chunk in chunks)
+
+    if {"wifi", "password"} <= question_words and not re.search(
+        r"\b(?:password|passphrase)\b", context, re.IGNORECASE
+    ):
+        return False
+    if {"email", "address"} <= question_words and not re.search(
+        r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", context, re.IGNORECASE
+    ):
+        return False
+    if {"phone", "number"} <= question_words and not re.search(
+        r"\b(?:\+?\d[\d ()-]{7,}\d)\b", context
+    ):
+        return False
+    if (
+        {"opening", "hours"} <= question_words
+        or {"closing", "hours"} <= question_words
+        or "when" in question_words and "open" in question_words
+    ) and not re.search(r"\b\d{1,2}(?::\d{2})?\s*(?:am|pm)\b", context, re.IGNORECASE):
+        return False
+    if (
+        {"url"} <= question_words
+        or {"website", "address"} <= question_words
+        or "link" in question_words
+    ) and not re.search(r"https?://\S+", context, re.IGNORECASE):
+        return False
+    return True
 
 
 def _result(status, answer, sources=None, best_score=0.0, error=None):
@@ -86,8 +161,17 @@ def answer_question(question, history=None):
 
     # Safety net 1: nothing in the documents matches -> do not call the LLM.
     if not relevant:
+        if _is_technical_support_question(question):
+            return _result(
+                config.STATUS_NOT_FOUND, NOT_FOUND_MESSAGE, best_score=best_score
+            )
         return _result(
             config.STATUS_OUT_OF_SCOPE, OUT_OF_SCOPE_MESSAGE, best_score=best_score
+        )
+
+    if not _has_explicit_answer_evidence(question, relevant):
+        return _result(
+            config.STATUS_NOT_FOUND, NOT_FOUND_MESSAGE, best_score=best_score
         )
 
     messages = build_messages(question, relevant, history)
@@ -121,9 +205,17 @@ if __name__ == "__main__":
         ("I forgot my email password", config.STATUS_ANSWERED),
         ("How do I change my Wi-Fi password?", config.STATUS_NOT_FOUND),
         ("Who won the cricket match yesterday?", config.STATUS_OUT_OF_SCOPE),
-        ("How do I install MATLAB on my laptop?", config.STATUS_OUT_OF_SCOPE),
+        ("How do I install MATLAB on my laptop?", config.STATUS_NOT_FOUND),
     ]
 
+    assert not _has_explicit_answer_evidence(
+        "How do I change my Wi-Fi password?",
+        [{"text": "Reconnect to the campus network with your credentials."}],
+    )
+    assert _has_explicit_answer_evidence(
+        "I forgot my email password",
+        [{"text": "Use the official password reset option."}],
+    )
     print(f"Similarity threshold: {config.SIMILARITY_THRESHOLD}\n")
     for question, expected in tests:
         result = answer_question(question)

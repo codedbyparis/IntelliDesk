@@ -1,0 +1,15 @@
+SAMPLE DEMONSTRATION DOCUMENT - NOT AN OFFICIAL UNIVERSITY PROCEDURE
+Title: Student Portal Troubleshooting (Sample)
+
+Problem: The portal page does not load
+
+1. Check that the device has an internet connection and reload the page.
+2. Confirm that the portal address matches the address provided by the university.
+3. Try a current browser or a private window to check whether a browser extension is interfering.
+4. If the portal remains unavailable, contact the IT helpdesk and include the time of the issue and any displayed error.
+
+Problem: Sign-in is rejected
+
+1. Check the username and password carefully without sharing them with anyone.
+2. Use the portal's official account-recovery option if one is available.
+3. If the account may be locked or compromised, contact the IT helpdesk.

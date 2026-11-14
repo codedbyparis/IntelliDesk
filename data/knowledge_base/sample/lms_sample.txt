@@ -1,0 +1,16 @@
+SAMPLE DEMONSTRATION DOCUMENT - NOT AN OFFICIAL UNIVERSITY PROCEDURE
+Title: Learning Management System Troubleshooting (Sample)
+
+Problem: Course content or the LMS page does not load
+
+1. Check the internet connection and reload the page.
+2. Confirm that the address is the LMS address provided by the organization.
+3. Try a supported, up-to-date browser and temporarily check in a private window.
+4. Note the course, page, time, and exact error message.
+5. If the issue continues, contact the LMS support team or IT helpdesk.
+
+Problem: Sign-in does not work
+
+1. Check the username and password without sharing credentials or one-time codes.
+2. Use the official account-recovery flow if available.
+3. If other university services also reject the account, contact the IT helpdesk.

@@ -2,9 +2,11 @@
 document_loader.py - Reads knowledge-base documents from disk.
 
 Each page of each document becomes one "page record", a dictionary:
-    {"text": ..., "source": file name, "page": page number, "label": "sample" or "verified"}
+    {"text": ..., "source": ..., "page": ..., "label": ..., "metadata": ...}
 This file only loads text. Cleaning and chunking happen in later files.
 """
+
+import json
 
 import pymupdf
 
@@ -30,6 +32,69 @@ def load_text_file(file_path):
     return []
 
 
+def load_jsonl_file(file_path):
+    """Read normalized JSONL records prepared for the knowledge base."""
+    records = []
+    with file_path.open(encoding="utf-8") as file:
+        for line_number, line in enumerate(file, start=1):
+            if not line.strip():
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError as error:
+                print(
+                    f"Warning: invalid JSON in {file_path.name} "
+                    f"line {line_number}: {error}"
+                )
+                continue
+
+            if not isinstance(record, dict):
+                print(
+                    f"Warning: record in {file_path.name} line {line_number} "
+                    "is not an object (skipped)"
+                )
+                continue
+
+            text = record.get("text")
+            source = record.get("source")
+            metadata = record.get("metadata", {})
+            page = record.get("page")
+            if not isinstance(text, str) or not text.strip():
+                print(
+                    f"Warning: empty or invalid text in {file_path.name} "
+                    f"line {line_number} (skipped)"
+                )
+                continue
+            if not isinstance(source, str) or not source.strip():
+                print(
+                    f"Warning: missing source in {file_path.name} "
+                    f"line {line_number} (skipped)"
+                )
+                continue
+            if page is not None and not isinstance(page, int):
+                print(
+                    f"Warning: invalid page in {file_path.name} "
+                    f"line {line_number} (skipped)"
+                )
+                continue
+            if not isinstance(metadata, dict):
+                print(
+                    f"Warning: invalid metadata in {file_path.name} "
+                    f"line {line_number} (skipped)"
+                )
+                continue
+
+            records.append(
+                {
+                    "text": text,
+                    "source": source,
+                    "page": page,
+                    "metadata": metadata,
+                }
+            )
+    return records
+
+
 def load_documents():
     """Load every supported file from every knowledge-base folder.
 
@@ -50,8 +115,10 @@ def load_documents():
             try:
                 if extension == ".pdf":
                     pages = load_pdf(file_path)
-                else:
+                elif extension == ".txt":
                     pages = load_text_file(file_path)
+                else:
+                    pages = load_jsonl_file(file_path)
             except Exception as error:
                 print(f"Warning: could not read {file_path.name}: {error}")
                 continue
@@ -61,14 +128,15 @@ def load_documents():
                 continue
 
             for page in pages:
-                documents.append(
-                    {
-                        "text": page["text"],
-                        "source": file_path.name,
-                        "page": page["page"],
-                        "label": label,
-                    }
-                )
+                document = {
+                    "text": page["text"],
+                    "source": page.get("source", file_path.name),
+                    "page": page.get("page", 1),
+                    "label": label,
+                }
+                if page.get("metadata"):
+                    document["metadata"] = page["metadata"]
+                documents.append(document)
 
     return documents
 
@@ -77,6 +145,34 @@ def load_documents():
 # Quick self-check: run with  python -m src.document_loader
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
+    import tempfile
+    from pathlib import Path
+
+    with tempfile.TemporaryDirectory() as temp_folder:
+        test_jsonl = Path(temp_folder) / "records.jsonl"
+        test_jsonl.write_text(
+            "\n".join(
+                [
+                    json.dumps(
+                        {
+                            "text": "A searchable support record.",
+                            "source": "Mack test record",
+                            "page": None,
+                            "metadata": {"record_id": "test-1"},
+                        }
+                    ),
+                    "{malformed json",
+                    json.dumps({"text": "", "source": "empty record"}),
+                ]
+            ),
+            encoding="utf-8",
+        )
+        test_records = load_jsonl_file(test_jsonl)
+        assert len(test_records) == 1
+        assert test_records[0]["source"] == "Mack test record"
+        assert test_records[0]["metadata"]["record_id"] == "test-1"
+    print("Normalized JSONL checks passed.\n")
+
     documents = load_documents()
     print(f"Loaded {len(documents)} page(s) from the knowledge base\n")
     for doc in documents:

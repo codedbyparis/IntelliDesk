@@ -1,0 +1,16 @@
+SAMPLE DEMONSTRATION DOCUMENT - NOT AN OFFICIAL UNIVERSITY PROCEDURE
+Title: Computer Lab Troubleshooting (Sample)
+
+Problem: A lab workstation has no network connection
+
+1. Check whether other devices in the same area can connect.
+2. Confirm that the workstation's network cable is seated, if a wired connection is used.
+3. Restart the browser and retry the affected service.
+4. Do not change shared workstation or network settings without authorization.
+5. Contact the IT helpdesk with the room, workstation identifier, and approximate time of the issue.
+
+Problem: A shared keyboard, mouse, or monitor is not working
+
+1. Check the cable connections and monitor input selection.
+2. If available, test the peripheral on another workstation without changing shared equipment.
+3. Report the workstation identifier and the affected device to the IT helpdesk.

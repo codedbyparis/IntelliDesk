@@ -47,15 +47,16 @@ def chunk_documents(
 
     for document in documents:
         for chunk_text in split_into_chunks(document["text"], chunk_size, overlap):
-            chunks.append(
-                {
-                    "chunk_id": len(chunks),
-                    "text": chunk_text,
-                    "source": document["source"],
-                    "page": document["page"],
-                    "label": document["label"],
-                }
-            )
+            chunk = {
+                "chunk_id": len(chunks),
+                "text": chunk_text,
+                "source": document["source"],
+                "page": document["page"],
+                "label": document["label"],
+            }
+            if document.get("metadata"):
+                chunk["metadata"] = document["metadata"]
+            chunks.append(chunk)
 
     return chunks
 
@@ -75,6 +76,23 @@ if __name__ == "__main__":
     assert split_into_chunks("a b\nc d", 4, 1) == ["a b\nc d"]
     assert split_into_chunks("   ", 4, 1) == []
     print("Window logic checks passed.\n")
+
+    metadata = {"dataset": "example", "record_id": "example-1"}
+    metadata_chunks = chunk_documents(
+        [
+            {
+                "text": "A searchable support record.",
+                "source": "example.jsonl",
+                "page": None,
+                "label": config.LABEL_SAMPLE,
+                "metadata": metadata,
+            }
+        ],
+        chunk_size=10,
+        overlap=2,
+    )
+    assert metadata_chunks[0]["metadata"] == metadata
+    print("Source metadata preservation check passed.\n")
 
     documents = load_documents()
     for document in documents:

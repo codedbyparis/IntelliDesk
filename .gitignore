@@ -14,6 +14,7 @@ __pycache__/
 data/index/
 data/*.db
 data/*.db-*
+data/models/
 
 # ---- Logs and temporary files ----
 *.log

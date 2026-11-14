@@ -1,0 +1,10 @@
+SAMPLE DEMONSTRATION DOCUMENT - NOT AN OFFICIAL UNIVERSITY PROCEDURE
+Title: Lab Booking Troubleshooting (Sample)
+
+Problem: A lab booking request does not complete
+
+1. Confirm that the booking page is the official page provided by the organization.
+2. Check that the selected date and time are still shown as available before submitting.
+3. Wait for a confirmation message and check the account used to submit the request.
+4. Do not assume a booking is confirmed if the page reports an error or no confirmation appears.
+5. Contact the lab administrator or IT helpdesk with the time of the request and any error message.

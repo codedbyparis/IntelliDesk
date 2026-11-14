@@ -1,0 +1,314 @@
+{
+  "description": "Local IntelliDesk cases plus a separate TechQA retrieval benchmark. TechQA questions, answers and contexts are never loaded into the application knowledge base.",
+  "local_cases": [
+    {
+      "id": "local-wifi-no-internet",
+      "question": "My campus Wi-Fi is connected but there is no internet.",
+      "expected_status": "answered",
+      "expected_source": "wifi_troubleshooting_sample.txt",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-campus-network-missing",
+      "question": "The campus wireless network does not appear on my phone.",
+      "expected_status": "answered",
+      "expected_source": "wifi_troubleshooting_sample.txt",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-email-password",
+      "question": "I forgot my university email password and cannot sign in.",
+      "expected_status": "answered",
+      "expected_source": "university_email_sample.pdf",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-portal-login",
+      "question": "I cannot sign in to the student portal.",
+      "expected_status": "answered",
+      "expected_source": "student_portal_sample.txt",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-software-permission",
+      "question": "An installer asks for administrator permission. What should I do?",
+      "expected_status": "answered",
+      "expected_source": "software_installation_sample.txt",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-lab-network",
+      "question": "A computer lab workstation has no network connection.",
+      "expected_status": "answered",
+      "expected_source": "computer_lab_sample.txt",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-lms-content",
+      "question": "My learning management system course content will not load.",
+      "expected_status": "answered",
+      "expected_source": "lms_sample.txt",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-security-prompt",
+      "question": "I received an unexpected sign-in approval prompt.",
+      "expected_status": "answered",
+      "expected_source": "account_security_sample.txt",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-booking",
+      "question": "My lab booking request returned an error and I did not receive confirmation.",
+      "expected_status": "answered",
+      "expected_source": "lab_booking_sample.txt",
+      "expected_ticket": false
+    },
+    {
+      "id": "local-wifi-password-not-found",
+      "question": "What is the official password for the campus Wi-Fi?",
+      "expected_status": "not_found",
+      "expected_source": "wifi_troubleshooting_sample.txt",
+      "expected_ticket": true
+    },
+    {
+      "id": "local-email-address-not-found",
+      "question": "What is the official IT helpdesk email address for portal problems?",
+      "expected_status": "not_found",
+      "expected_source": "student_portal_sample.txt",
+      "expected_ticket": true
+    },
+    {
+      "id": "local-out-cricket",
+      "question": "Who won yesterday?s cricket match?",
+      "expected_status": "out_of_scope",
+      "expected_source": null,
+      "expected_ticket": true
+    },
+    {
+      "id": "local-out-entertainment",
+      "question": "Recommend a new movie to watch this weekend.",
+      "expected_status": "out_of_scope",
+      "expected_source": null,
+      "expected_ticket": true
+    },
+    {
+      "id": "local-out-unsupported-db",
+      "question": "How do I configure Oracle database replication on a production server?",
+      "expected_status": "not_found",
+      "expected_source": null,
+      "expected_ticket": true
+    }
+  ],
+  "techqa_source": {
+    "name": "TechQA-RAG-Eval",
+    "url": "https://huggingface.co/datasets/nvidia/TechQA-RAG-Eval",
+    "license": "Apache-2.0",
+    "source_record_count": 910,
+    "duplicate_question_count": 20,
+    "source_impossible_count": 300,
+    "source_with_context_count": 610
+  },
+  "techqa_cases": [
+    {
+      "id": "TRAIN_Q000",
+      "question": "User environment variables no longer getting picked up after upgrade to 4.1.1.1 or 4.1.1.2?\n\n\n\nHave you found that after upgrade to Streams 4.1.1.1 or 4.1.1.2, that environment variables set in your .bashrc are no longer being set? For example ODBCINI is not set for the database toolkit and you get\n\n     An SQL operation failed. The SQL state is 08003, the SQL code\n     is 0 and the SQL message is [unixODBC][Driver\n     Manager]Connnection does not exist.",
+      "answer": "To work around the issue, set environment variables that are needed by the application directly in the instance with:  * \n   \n * streamtool setproperty\n * -d <domain> -i <instance>\n   --application-ev <VARIABLE NAME>=<VARIABLE VALUE>",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21996508.txt",
+          "text": "Title: IBM STREAMS 4.1.1.1 and 4.1.1.2  JOBS DO NOT INHERIT THE ENVIRONMENT VARIABLES SET IN .BASHRC, WHEN STREAMS IS RUN AS A SYSTEM SERVICE - United States\n\nText:\n FLASH (ALERT)\n\nABSTRACT\n In Streams 4.1.1.1 and 4.1.1.2 Streams jobs may not pick up the user enviroment from the streams user's .bashrc. This behavior is different from earlier releases. With these versions, when Streams is run as a system service, application environment variables must be set with streamtool. \n\nCONTENT\nProblem Description\nWhen running Streams as a system service with Streams releases 4.1.1.1\nor 4.1.1.2, toolkits and user applications that depend on the\nuser environment may have various errors.\nFor example the database toolkit might show the following error\nif it does not pick up the ODBCINI environment variable:\n\n\n\n * \"An SQL operation failed. The SQL state is 08003, the SQL code\n   is 0 and the SQL message is [unixODBC][Driver\n   Manager]Connnection does not exist.\"\n * \n\nProblem Solution \n\nTo work around the issue, set environment variables that are needed by the application directly in the instance with:  * \n   \n * streamtool setproperty\n * -d <domain> -i <instance>\n   --application-ev <VARIABLE NAME>=<VARIABLE VALUE>\n * \n   \n\n\nRELATED INFORMATION\n APAR IT18432 [https://www-01.ibm.com/support/entdocview.wss?uid=swg1IT18432]"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q001",
+      "question": "Netcool/Impact (all versions): How is the Exit() action function expected to work with User Defined Functions?\n\nNetcool/Impact (all versions)\n\nUsing the Exit() action function within a User Defined Function in a Policy will not exit the Policy process.",
+      "answer": "This is because the Exit() parser function in IPL is designed to exit the immediate scope. To carry the action outside of the User Defined Function to the Policy level one would have to set a variable that is then tested immediately after the User Defined Function call",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21675316.txt",
+          "text": "Title: IBM Exit() action within User Defined Function in Impact Policy Language - United States\n\nText:\nnetcool; impact; netcool/impact; nci; ipl; policy; language; exit; exit(); function; user; defined; custom; udf; parser; action; set; global; variable; var; get; setglobalvar; getglobalvar; globalvar TECHNOTE (FAQ)\n\nQUESTION\n and how to exit the Policy process from within a Custom Function \n\nCAUSE\nUsing the Exit() parser function within a User Defined (or Custom) Function in Impact Policy Language (IPL) will not exit the Policy process, it will only exit the User Defined Function.\n\nANSWER\nThis is because the Exit() parser function in IPL is designed to exit the immediate scope. To carry the action outside of the User Defined Function to the Policy level one would have to set a variable that is then tested immediately after the User Defined Function call - for example: \n\n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * SetGlobalVar(\"ExitNow\", 1);\n * \n * Exit();\n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * SetGlobalVar(\"ExitNow\", 1);\n * \n * Exit();\n * \n * \n * \n * \n * \n * \n * \n * \n * \n * \n * If(GetGlobalVar(\"ExitNow\") == 1)\n * \n * {\n   Log(ID+WP+\": Existing policy...\");\n   \n * Exit\n * ();\n   }\n\n\nThe above example ties in somewhat with the exampled configuration from the TechNote \"Event Flagging with Go_NoGo checking\" [ link below] and uses structured logging as covered in the TechNote \"Structured logging in Policies\" [ link below]. \n\nIf the User Defined Function was nested within another User Defined Function one would have to exit each layer to return the Policy layer before the Exit() action would exit the Policy. \nRELATED INFORMATION\n Event Flagging with Go_NoGo checking [http://www-01.ibm.com/support/docview.wss?uid=swg21675015]\nStructured Logging in Policies [http://www-01.ibm.com/support/docview.wss?uid=swg21596180]"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q003",
+      "question": "How to configure SSL mutual authentication in IBM HTTP Server?\n\n\n\nWe are running IHS v7 and our application team has a specific webservice that they require SSL mutual authentication to be enabled for at the http server. Does anyone know how to set this up on IHS? Or any documentation?\n\nThanks",
+      "answer": "The following steps help guide you through the proper set up of SSL within the IBM HTTP Server: \n\n 1. Confirm that the Global Security Kit (GSKit) is installed and meets the minimum requirements\n    \n    \n 2. Create a key database file and certificates needed to authenticate the Web server during an SSL handshake\n    \n    \n 3. Enable SSL directives within the IBM HTTP Server configuration file (httpd.conf)\n    \n    \n 4. Other considerations when enabling SSL directives within the IBM HTTP Server configuration file (httpd.conf)\n    \n    \n 5. Information that IBM WebSphere® Support needs to debug SSL configuration and certificate issues related to the IBM HTTP Server",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21179559.txt",
+          "text": "Title: IBM Guide to properly setting up SSL within the IBM HTTP Server - United States\n\nText:\nssl; handshake; secure socket layer; handshake failed; enable; ssl config; ssl setup; setup; IHS; crl; revocation; ssl; ssl; ssl; configure; config; config; config TECHNOTE (TROUBLESHOOTING)\n\nPROBLEM(ABSTRACT)\n The following information can be used as a guide for setting up the Secure Sockets Layer (SSL) within the IBM HTTP Server. This document covers information on setting up SSL virtualhosts, creating keyfiles, certificates along with how to protect access to directories and URLs to specific ciphers. Also, included is documentation on how to trace and record SSL traffic between a client browser and the Web server. \n\nRESOLVING THE PROBLEM\nThe following steps help guide you through the proper set up of SSL within the IBM HTTP Server: \n\n 1. Confirm that the Global Security Kit (GSKit) is installed and meets the minimum requirements\n    \n    \n 2. Create a key database file and certificates needed to authenticate the Web server during an SSL handshake\n    \n    \n 3. Enable SSL directives within the IBM HTTP Server configuration file (httpd.conf)\n    \n    \n 4. Other considerations when enabling SSL directives within the IBM HTTP Server configuration file (httpd.conf)\n    \n    \n 5. Information that IBM WebSphere® Support needs to debug SSL configuration and certificate issues related to the IBM HTTP Server\n\n\n\n\n\n\n 1. Confirm that the Global Security Kit is installed and meets the minimum requirements\n    \n    The Global Security Kit (GSKit) is a required component for the Secure Sockets Layer (SSL) enablement within the IBM HTTP Server. Therefore, it is important to confirm that a supported version of the Global Security Kit is installed prior to enabling SSL.\n    \n    For a complete listing of IBM HTTP Server releases and corresponding Global Security Kit versions, click IBM HTTP Server: Global Security Kit (GSKit) supported versions [http://www.ibm.com/support/docview.wss?rs=177&context=SSEQTJ&uid=swg21173214].\n    \n    \n    \n 2. Create a key database file and certificates needed to authenticate the Web server during an SSL handshake\n    \n    The iKeyman GUI, which is included within the IBM HTTP Server distribution, can be used to create a key database file (for example: key.kdb) needed to store personal server certificates required by the client browser during an SSL handshake.\n    \n    For quick information on how to create a key database file and personal server certificates, refer to the technote IKEYMAN, How do I...? [http://www.ibm.com/support/docview.wss?rs=177&context=SSEQTJ&uid=swg21006430] \n    \n    More extensive information on using the iKeyman GUI to create key database files and certificates is located here:  * For releases of IBM HTTP Server v7.0 [http://pic.dhe.ibm.com/infocenter/wasinfo/v7r0/index.jsp?topic=%2Fcom.ibm.websphere.ihs.doc%2Finfo%2Fihs%2Fihs%2Fwelc_ikeymangui.html] \n     * For releases of IBM HTTP Server v8.0 [http://pic.dhe.ib"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q005",
+      "question": "What happened to load.rules FAQ example?\n\nThe load.rules maths function example rules file does not appear to be available anymore?",
+      "answer": "Netcool Technical Support Guide to rules file processing is provided as a collection of commonly used rules file techniques.",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21903536.txt",
+          "text": "Title: IBM Support's Guide to Rules File Processing - United States\n\nText:\nrules; rules file; array TECHNOTE (FAQ)\n\nQUESTION\n Support Guide : Are there any rules file examples? \n\nANSWER\n \n\nThe Netcool Technical Support Guide to rules file processing is provided as a collection of commonly used rules file techniques. \n\nPlease refer to the Netcool/OMNIbus Probe and Gateway Guide for general guidance to rules file processing.\n\nRulesfileProcessing_SupportsGuide_30.pdf [/support/docview.wss?uid=swg21903536&aid=2]RulesfileProcessing_SupportsGuide_30.pdf [/support/docview.wss?uid=swg21903536&aid=1]"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q006",
+      "question": "Is ITNM exposed to Apache CXF vulnerability (CVE-2017-3156)?\n\nIs ITNM versions are affected by Apache CXF vulnerability (CVE-2017-3156), If yes then what are all the version will be affected and where I can find the details?",
+      "answer": "CVEID: CVE-2017-3156 [http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-3156]\nDESCRIPTION: Apache CXF could provide weaker than expected security, caused by the failure to use the OAuth2 Hawk and JOSE MAC Validation code. A remote attacker could exploit this vulnerability using timing attacks to obtain sensitive information.\nCVSS Base Score: 5.9\nCVSS Temporal Score: See https://exchange.xforce.ibmcloud.com/vulnerabilities/130249 [https://exchange.xforce.ibmcloud.com/vulnerabilities/130249] for the current score\nCVSS Environmental Score*: Undefined\nCVSS Vector: (CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N)",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg22008493.txt",
+          "text": "Title: IBM Security Bulletin: IBM Tivoli Network Manager IP Edition is affected by an Apache CXF vulnerability (CVE-2017-3156) - United States\n\nText:\n SECURITY BULLETIN\n\nSUMMARY\n Vulnerability has been addressed in the Apache CXF component of Tivoli Network Manager IP Edition. \n\nVULNERABILITY DETAILS\nCVEID: CVE-2017-3156 [http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-3156]\nDESCRIPTION: Apache CXF could provide weaker than expected security, caused by the failure to use the OAuth2 Hawk and JOSE MAC Validation code. A remote attacker could exploit this vulnerability using timing attacks to obtain sensitive information.\nCVSS Base Score: 5.9\nCVSS Temporal Score: See https://exchange.xforce.ibmcloud.com/vulnerabilities/130249 [https://exchange.xforce.ibmcloud.com/vulnerabilities/130249] for the current score\nCVSS Environmental Score*: Undefined\nCVSS Vector: (CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N) \n\nAFFECTED PRODUCTS AND VERSIONS\nTivoli Network Manager IP Edition 4.1.1 (Huawei MTOSI Collector install)\nTivoli Network Manager IP Edition 4.2.0 (Huawei MTOSI Collector install)\n\nREMEDIATION/FIXES\n \n\nProduct VRMF APAR Remediation/First Fix Tivoli Network Manager IP Edition 4.1.1 IV99816 Please call IBM service and reference APAR IV99816, to obtain a fix if needed for 4.1.1 release. Tivoli Network Manager IP Edition 4.2.0 IV99816 CXF 3.1.10 has been upgraded in 4.2 FixPack 3.\nhttp://www-01.ibm.com/support/docview.wss?uid=swg24043575 [http://www-01.ibm.com/support/docview.wss?uid=swg24043575] WORKAROUNDS AND MITIGATIONS\nNone\n\nGET NOTIFIED ABOUT FUTURE SECURITY BULLETINS\n Subscribe to My Notifications [ http://www-01.ibm.com/software/support/einfo.html] to be notified of important product support alerts like this. \n\nREFERENCES\nComplete CVSS v3 Guide [http://www.first.org/cvss/user-guide] \nOn-line Calculator v3 [http://www.first.org/cvss/calculator/3.0] \n\nRELATED INFORMATION\nIBM Secure Engineering Web Portal [http://www.ibm.com/security/secure-engineering/bulletins.html] \nIBM Product Security Incident Response Blog [http://www.ibm.com/blogs/psirt] \n\nCHANGE HISTORY\n 15 September 2017 : Original Version Published \n\n*The CVSS Environment Score is customer environment specific and will ultimately impact the Overall CVSS Score. Customers can evaluate the impact of this vulnerability in their environments by accessing the links in the Reference section of this Security Bulletin. \n\nDISCLAIMER\nAccording to the Forum of Incident Response and Security Teams (FIRST), the Common Vulnerability Scoring System (CVSS) is an \"industry open standard designed to convey vulnerability severity and help to determine urgency and priority of response.\" IBM PROVIDES THE CVSS SCORES \"AS IS\" WITHOUT WARRANTY OF ANY KIND, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. CUSTOMERS ARE RESPONSIBLE FOR ASSESSING THE IMPACT OF ANY ACTUAL OR POTENTIAL SECURITY VULNERABILITY."
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q007",
+      "question": "Why do I get an exception when calling MQ after migrating my BPM environment (2035 MQRC_NOT_AUTHORIZED) ?\n\n\n\nWe migrated our BPM environment from V8.0 to 8.5.7. When we attempt to call the MQ service we are getting the following exception:\n\n     [10/16/17 13:50:05:273 AST] 0000026d SystemOut     O\n     com.ibm.msg.client.jms.DetailedJMSSecurityException: JMSWMQ2013: The\n     security authentication was not valid that was supplied for QueueManager\n     'QM1' with connection mode 'Client' and host name 'MQ1(1414)'.\n     Please check if the supplied username and password are correct on the\n     QueueManager to which you are connecting.\n     ...\n     Caused by: com.ibm.mq.MQException: JMSCMQ0001: WebSphere MQ call failed\n     with compcode '2' ('MQCC_FAILED') reason '2035' ('MQRC_NOT_AUTHORIZED').\n      at\n     com.ibm.msg.client.wmq.common.internal.Reason.createException(Reason.jav\n     a:204)\n      ... 162 more\n\nThe same MQ service is working fine in the old BPM environment. User name and password configured for the queue is correct. However, when we check the MQ logs, we observing the username is not used, instead the sys admin user seems to be used.",
+      "answer": "Default component-managed authentication alias for outbound connections \n\nFor cases where it is impractical to change the application to use container-managed security, or to change it to supply a username and password directly on the createConnection call, it is possible to supply a default. \n\nThis default is called the \"component-managed authentication alias\" and cannot be configured via the administrative console (since WebSphere Application Server Version 7.0 when it was removed from the panels MQ connection factories). The below scripting samples show how to configure it using wsadmin: \n\n * JACL:\n   wsadmin>set cell [ $AdminConfig getid \"/Cell:mycell\" ]\n   \n   mycell(cells/mycell|cell.xml#Cell_1)\n   \n   wsadmin>$AdminTask listWMQConnectionFactories $cell\n   \n   MyCF(cells/mycell|resources.xml#MQConnectionFactory_1247500675104)\n   \n   wsadmin>$AdminTask modifyWMQConnectionFactory MyCF(cells/mycell|resources.xml#MQConnectionFactory_1247500675104) { -componentAuthAlias myalias }\n   \n   MyCF(cells/mycell|resources.xml#MQConnectionFactory_1247500675104) \n * Jython:\n   wsadmin>cell = AdminConfig.getid(\"/Cell:mycell\")\n   \n   wsadmin>AdminTask.listWMQConnectionFactories(cell)\n   \n   'MyCF(cells/mycell|resources.xml#MQConnectionFactory_1247500675104)'\n   \n   wsadmin>AdminTask.modifyWMQConnectionFactory('MyCF(cells/mycell|resos urces.xml#MQConnectionFactory_1247500675104)', \"-componentAuthAlias myalias\")\n   \n   'MyCF(cells/mycell|resources.xml#MQConnectionFactory_1247500675104)'",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21636093.txt",
+          "text": "Title: IBM 2035 MQRC_NOT_AUTHORIZED Connecting to WebSphere MQ from WebSphere Application Server via CLIENT Bindings - United States\n\nText:\n TECHNOTE (TROUBLESHOOTING)\n\nPROBLEM(ABSTRACT)\n This article covers the most common reasons why an application running in WebSphere Application Server receives a 2035 MQRC_NOT_AUTHORIZED error when connecting to MQ as a client over a network. Quick steps to work around the MQRC_NOT_AUTHORIZED errors during development are provided in the 'Resolving the problem' section, as well as considerations for implementing security in production environments. A summary is also provided of behavior for outbound scenarios with container-managed and component-managed security, as well as inbound behavior for listener ports and activiation specifications \n\nSYMPTOM\nJMSCMQ0001: WebSphere MQ call failed with compcode '2' ('MQCC_FAILED') reason '2035' ('MQRC_NOT_AUTHORIZED')\n\n\nCAUSE\nThe two most likely reasons why the connection is refused by MQ are as follows: \n\n 1. The user identifier passed across the client connection from the application server to MQ is not known on the server where the MQ queue manager is running, is not authorised to connect to MQ, or is longer than 12 characters and has been truncated.\n    We discuss how this user identifier is obtained and passed over the connection in more detail below.\n    For queue managers running on Windows, the following error might be seen in the MQ error logs for this scenario:\n    AMQ8075: Authorization failed because the SID for entity 'wasuser' cannot be obtained.\n    For UNIX no entry in the MQ error logs would be seen by default.\n    See technote MQS_REPORT_NOAUTH environment variable can be used to better diagnose return code 2035 [http://www-01.ibm.com/support/docview.wss?rs=171&uid=swg21299319] for details of enabling error log entries on all platforms. \n 2. The user identifier passed across the client connection from the application server to MQ is a member of the 'mqm' group on the server hosting the MQ queue manager, and a Channel Authentication Record (CHLAUTH) exists that blocks administrative access to the queue manager. WebSphere MQ configures a CHLAUTH record by default in WebSphere MQ Version 7.1 and later that blocks all MQ admins from connecting as a client to the queue manager.\n    The following error in the MQ error logs would be seen for this scenario:\n    AMQ9777: Channel was blocked\n\nSee the Error logs on Windows, UNIX and Linux systems [http://pic.dhe.ibm.com/infocenter/wmqv7/v7r5/topic/com.ibm.mq.tro.doc/q039560_.htm] section of the MQ Information Center for the location of the MQ error logs. \nDIAGNOSING THE PROBLEM\nTo understand the cause of the MQRC_NOT_AUTHORIZED reason code, you need to understand what username (and password) is being used by MQ to authorise the application server. \n\nPlease note that WebSphere MQ V7.5 and earlier does not provide any out-of-the box password authentication system for client connections.\nPassword authentication is pr"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q008",
+      "question": "Is the Requisite Pro (ReqPro) feature/plugin supported with a 64-bit RAD/RSA(4WS) 851+ installation\n\nIs the Requisite Pro (ReqPro) feature/plugin supported with a 64-bit install of RAD/RSA(4WS) 851?",
+      "answer": "the Rational RequisitePro integration features/plugins are not supported or provided. These are only available as 32-bit eclipse plugins.",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21263677.txt",
+          "text": "Title: IBM Rational Application Developer Support Policy for 64 bit technology - United States\n\nText:\nRSM; RSD; RSA; RAD; caspian64 bit; 64-bit; RAD 7 64 bit; RAD 7 OS; operating system; Rational Application Developer; X64; Windows 64 bit; supported OS; AMD; PMR #13878; 379; 000; 13878379000; 1263677; 64bit; 64 bit; 32 bit; 32bit; 32-bit; 64-bit; O/S; OS; requirements; system requirements; 8.0.3; 8.0; 7.5; v8.0.3; v7.5; v7.0; v8.0; v7.5.4; 803; windows 7; server; profile; websphere; test environment; create profile; button; greyed; Run Profile Management Tool ; disabled; IBM Software Development Kit; SDK; JRE; Program Files(x86); WAS; websphere application server; clearcase; scm; clearcase scm adapter; rational requisitepro; reqpro; heap size; jvm; max os x; os x; osx; mac TECHNOTE (FAQ)\n\nQUESTION\n What is the support policy for using IBM Rational Application Developer for WebSphere Software, IBM Rational Software Architect, IBM Rational Software Modeler or IBM Rational Systems Developer version 7.x and 8.x with 64-bit operating systems for Microsoft Windows or Linux? \n\nCAUSE\nThe 7.0.0.x, v7.5.x and v8.0 to 8.0.2 versions of these applications were not designed to take advantage of 64 bit computing and only use 32-bit technology.\n\nANSWER\nThe following IBM Rational Software version 7.x products are only supported on specified 64 bit operating systems running in 32 bit mode: \n\n * Rational Application Developer for WebSphere Software \n * Rational Software Architect \n * Rational Software Modeler \n * Rational Systems Developer\n\n\nSimilarly, Rational Application Developer (RAD) and Rational Software Architect (RSA) version 8.0 to 8.0.2 are only supported on specified 64 bit operating systems running in 32 bit mode. Rational Application Developer v8.0.3+ is available as a 64-bit application install on specified 64-bit operating systems, in addition to a 32-bit application install.\nThere is only one installation package. When installing RAD/RSA using IBM Installation Manager, on the Location page , if your operating system is 64-bit, then select 64-bit or 32-bit to install the product in the corresponding bit mode. \n\n \n\nThese products will be referred to generically as Rational Software Development Platform (RSDP) based products. For example, WebSphere Integration Developer v6.x/7.x is RSDP based. \n\nExamples of some 64 bit Operating Systems: \n\n * Microsoft Windows XP Professional x64 Edition (running on an AMD or Intel processor) \n * Microsoft Windows 7 Professional 64-bit \n * Red Hat Linux Enterprise Server 4+ running on x86-64 bit \n * RAD 9.0 under 9.0.1 introduced support for Mac OS x - Lion 10.7 32 bit (with Oracle JDK for Mac OS X 7.0 Update 40) and Mountain Lion 10.8 - 32 bit. Likewise for RSA for WebSphere 9.0.0.1.\n   RAD 9.0.1.1 introduced support for 64-bit exploit on Mac OS x Mavericks 10.9 ( with Oracle JDK for Mac OS X 7.0 Update 71)\n   RSA 9.1.2 introduced support for 64-bit exploit on Mac OS X Yosemite 10.10 and OS X El Capitan 10.11 (with O"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q009",
+      "question": "Unable to locate the More tab of Document class - Property definition tab - property template configuration to update Is Required setting.\n\nUnable to locate the More tab of Document class - Property definition tab - property template configuration to update Is Required setting. Environment is running on Content Engine 5.2.0.3.",
+      "answer": "Follow the below steps to update the property definition properties on ACCE: \n\n\n\n\n 1. Launch ACCE \n 2. Expand the object stores folder and click the object store to open the Object store tab \n 3. Expand the Data Design folder and Classes folder. Click the document class to open Document Class tab \n 4. From Properties tab, open Property Definitions drop down and select the property definition you want to modify \n 5. ACCE will open that property definition in a new Properties tab \n 6. Modify the property definition as required \n 7. Go back to the Class Definition tab and click Save",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21696083.txt",
+          "text": "Title: IBM How to overwrite property definition properties in a class via IBM Administration Console for Content Platform Engine (ACCE)? - United States\n\nText:\nACCE; CE; Property; FEM TECHNOTE (FAQ)\n\nQUESTION\n With IBM FileNet Enterprise Manager (FEM), we can follow the steps below to overwrite the property definition in a document class\n\n1. Launch FEM\n2. Expand the object store and document class tree. Right click on the document class and select \"Properties\"\n3. Go to \"Properties Definitions\" tab, highlight the property definition and click \"Edit\"\n4. Make the modification and click OK\n5. Click OK again to save the change\n\nHow to perform the same operation with FileNet Content Engine - ACCE? \n\nANSWER\nFollow the below steps to update the property definition properties on ACCE: \n\n\n\n\n 1. Launch ACCE \n 2. Expand the object stores folder and click the object store to open the Object store tab \n 3. Expand the Data Design folder and Classes folder. Click the document class to open Document Class tab \n 4. From Properties tab, open Property Definitions drop down and select the property definition you want to modify \n 5. ACCE will open that property definition in a new Properties tab \n 6. Modify the property definition as required \n 7. Go back to the Class Definition tab and click Save"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q010",
+      "question": "managesdk.sh -listEnabledProfileAll fails with error: Couldn't get file lock.\n\n\n\nI am installing WebGUI FP13 and it is failing with the symptoms described in below technote.\n\nhttps://www-01.ibm.com/support/docview.wss?uid=swg21993160\n\nAs described in above technote when I run managesdk.sh script it fails with below errors.\n\n./managesdk.sh -listEnabledProfileAll\n\nSep 26, 2018 10:14:12 AM java.util.prefs.FileSystemPreferences syncWorld\n\nWARNING: Couldn't flush user prefs: java.util.prefs.BackingStoreException: Couldn't get file lock.\n\nPlease let me know what could be the issue?",
+      "answer": "The non-root ID that is being used to start WebSphere Application Server does not have a user_home directory. Therefore this non-root ID is unable to access the root user's \"/etc/.java/.systemPrefs\". This produces the aforementioned warning messages every 30 seconds in the profile_root/logs/server_name/systemout.log.\n\nThe root ID used to start Websphere Application Server can not find the Java system pref file.",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21515420.txt",
+          "text": "Title: IBM Starting WebSphere Application Server gives warning message - Could not lock User prefs - United States\n\nText:\nWebsphere; startup; FileSystemPreferences; user prefs; prefs; Could not lock User prefs TECHNOTE (TROUBLESHOOTING)\n\nPROBLEM(ABSTRACT)\n Warning message issued during the non-root or root startup of WebSphere stating that it can not lock the user or system preferences. \n\nSYMPTOM\nThe following message can be seen in the systemout.log: \n\n[9/11/11 18:03:19:921 EDT] 00000001 prefs W java.util.prefs.FileSystemPreferences syncWorld Couldn't flush user prefs: java.util.prefs.BackingStoreException: Couldn't get file lock.\n[9/11/11 18:03:49:929 EDT] 00000001 prefs W java.util.prefs.FileSystemPreferences checkLockFile0ErrorCode Could not lock User prefs. Unix error code 2.\n\n\nCAUSE\nThe non-root ID that is being used to start WebSphere Application Server does not have a user_home directory. Therefore this non-root ID is unable to access the root user's \"/etc/.java/.systemPrefs\". This produces the aforementioned warning messages every 30 seconds in the profile_root/logs/server_name/systemout.log.\n\nThe root ID used to start Websphere Application Server can not find the Java system pref file. \n\n\nDIAGNOSING THE PROBLEM\nFor non-root, you can confirm this issue by trying to start WebSphere using the \"root\" ID. Review the Websphere_Home/profiles/<profile_name>/logs/<failing server_name/systemout.log to verify that you no longer see the warning messages. \n\n\nFor root, verify if the /etc/.java/.systemPrefs exists\n\n\nRESOLVING THE PROBLEM\nFor non-root : \n\nCreate a User_Home directory for this non-root user and restart WebSphere Application Server. If this does not resolve the issue use the following 2 suggestions below : \n\nNOTE : The \"dot\" in front of the directories below represent that these are \"hidden\" directories. So the \"dot\" must be in front of the directory name to go into the directory or to access them. \n\n1. Try giving 755 permission for /home/wasadmin/.java/.userPrefs \n\n2. Add \"-Djava.util.prefs.userRoot=/home/wasadmin/preps\" as a SDK generic jvm argument \n\n\nTo set the argument on the SDK: \n\n 1. In the administrative console, click Servers > Server Types > WebSphere application servers , and select the server that you want to add the generic argument to.. \n 2. Then, in the Server Infrastructure section, click Java and process management > Process definition > Java virtual machine. \n 3. Specify -Djava.util.prefs.userRoot=/home/wasadmin/preps for the Generic JVM Arguments property, and click OK . \n 4. Click Save to save your changes. \n 5. Restart the application server.\n\n\nFor root :  1. Create a Java system pref directory\n    sudo mkdir -p /etc/.java/.systemPrefs \n 2. Restart the application server."
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q011",
+      "question": "Load SPSS 25 on a new computer\n\nI purchased SPSS 25 with a 12 month license on Jan 27. I loaded it and used it on my MacBook Pro. I now have a new MacBookPro. I was able to download the program but get a message that says I don't have a license. I do have the activation code. Can you please help me use this product on my new computer? Thanks!",
+      "answer": "Type (copy/paste) the following command: \n    \n    sudo chown -R root:admin 20\n    \n 2. Press Enter/Return. \n 3. Close Terminal. \n 4. Launch the License Authorization Wizard. \n 5. The warning message should no longer appear. \n 6. License your IBM SPSS Statistics product.",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21966637.txt",
+          "text": "Title: IBM Getting a warning message 'You do not have the correct administrator privileges' when attempting to license a SPSS Statistics product on Mac OS. - United States\n\nText:\n TECHNOTE (TROUBLESHOOTING)\n\nPROBLEM(ABSTRACT)\n You have successfully installed an IBM SPSS Statistics product on a Mac computer. When you start the License Authorization Wizard (LAW) to enter the authorization code for licensing.\n\nYou receive the following message:\n\n\n\"Warning! You do not have the correct administrator privileges to license this product. Log in as administrator and try again, or contact your network administrator to correct this issue.\n\n\"\n\nOnce this message is displayed the only option available is \"OK\" to click on and you cannot enter your authorization code. \n\nRESOLVING THE PROBLEM\nBelow is a picture of the warning: \n\n[/support/docview.wss?uid=swg21966637&aid=1] [/support/docview.wss?uid=swg21966637&aid=1]\n\nIf you encounter this message, perform the following procedure:\n\n\n 1.  If open, close the IBM SPSS Statistics product. \n 2.  If open, close the License Authorization Wizard. \n 3.  Open Finder. \n 4.  Select the 'Go' menu. \n 5.  Select the 'Utilities' menu. \n 6.  Open the 'Terminal' program. \n 7.  Type (copy/paste) the following command:\n     \n     cd /Applications/IBM/SPSS/Statistics/ \n 8.   \n 9.  Press Enter/Return. \n 10. Perform the procedure corresponding to the Statistics product version as described below:\n\n\nStatistics Release 20  1. Type (copy/paste) the following command: \n    \n    sudo chown -R root:admin 20\n    \n 2. Press Enter/Return. \n 3. Close Terminal. \n 4. Launch the License Authorization Wizard. \n 5. The warning message should no longer appear. \n 6. License your IBM SPSS Statistics product.\n\n\nStatistics Release 21  1. Type (copy/paste) the following command: \n    \n    sudo chown -R root:admin 21\n    \n 2. Press Enter/Return. \n 3. Close Terminal. \n 4. Launch the License Authorization Wizard. \n 5. The warning message should no longer appear. \n 6. License your IBM SPSS Statistics product.\n\n\nStatistics Release 22  1. Type (copy/paste) the following command: \n    \n    sudo chown -R root:admin 22\n    \n 2. Press Enter/Return. \n 3. Close Terminal. \n 4. Launch the License Authorization Wizard. \n 5. The warning message should no longer appear. \n 6. License your IBM SPSS Statistics product.\n\n\n\nStatistics Release 23  1. Type (copy/paste) the following command: \n    \n    sudo chown -R root:admin 23\n    \n 2. Press Enter/Return. \n 3. Close Terminal. \n 4. Launch the License Authorization Wizard. \n 5. The warning message should no longer appear. \n 6. License your IBM SPSS Statistics product.\n\n\nStatistics Release 24  1. Type (copy/paste) the following command: \n    \n    sudo chown -R root:admin 24\n    \n 2. Press Enter/Return. \n 3. Close Terminal. \n 4. Launch the License Authorization Wizard. \n 5. The warning message should no longer appear. \n 6. License your IBM SPSS Statistics product. \n 7.  \n 8. \n\nStatistics Release 25  1. Type (copy/paste) the followi"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q012",
+      "question": "Are there any instructions for ulimit settings for WebSphere running on Linux?\n\nAre there any instructions for ulimit settings for WebSphere running on Linux?",
+      "answer": "WebSphere Application Server Support recommends setting the ulimit -u or nproc to a value of 131072 when running on Linux to safely account for all the forked threads within processes that could be created.",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21648497.txt",
+          "text": "Title: IBM Insufficient ulimit Value Causes Native OutOfMemory - United States\n\nText:\n TECHNOTE (TROUBLESHOOTING)\n\nPROBLEM(ABSTRACT)\n An out of memory may be observed on a system running WebSphere Application Server on Linux or AIX that is due to ulimit restrictions on number of process/threads per user. Further investigation may reveal a \"Failed to create a thread:\" message within the generated javacore which would indicate a native out of memory issue has been encountered. The cause of the problem may be an insufficient ulimit setting. While this type of issue can occur on any level of Linux, or AIX, the issue is most likely to be seen in systems running multiple instances of WebSphere Application Server using one userid. The following will outline how to identify if a process ulimit is the culprit and what WebSphere Application Server Support recommends to fix the case. \n\nSYMPTOM\nAn out of memory Dump Event such as: \n\n\"systhrow\" (00040000) Detail \"java/lang/OutOfMemoryError\"\n\"Failed to create a thread: retVal -1073741830, errno 11\" received\n\nNote: This detailed message will appear only in javacores.\n\n\nDIAGNOSING THE PROBLEM\nWhen using WebSphere Application Server, ulimits can be set to fix or tune around a number of problems. For more on how to set a ulimit refer to the \"Guidelines for setting ulimits [http://www-01.ibm.com/support/docview.wss?uid=swg21469413]\" Technote which goes into detail on setting different ulimits on various operating systems and the difference between the soft and hard limit. This article is concerned particularly with the \"-u\" ulimit or \"nproc\" limit on Linux, the ulimit - r on AIX which affects the number of threads allowed for a single user process running WebSphere Application Server. \n\nThe AIX issue is less commonly seen as it limits then number of threads for a process but is seen in application servers with very large thread pools, This is becoming more common in 64bit addressing JVMs running complex applications. WebSphere Application support recommends setting the ulimit -r ulimited on AIX.\n\nThe nproc limit usually only counts processes on a server towards determining this number. Linux systems running WebSphere Application Server are a particular case. The nproc limit on Linux counts the number of threads within all processes that can exist for a given user. To determine the ulimit settings of a WebSphere Application Server process running on Linux refer to \"How to determine the ulimit settings of a running WebSphere Application Server process on Linux [http://www-01.ibm.com/support/docview.wss?uid=swg21407889]\".\n\nUser Limits (in bytes except for NOFILE and NPROC) \n\ntype soft limit hard limit RLIMIT_AS unlimited unlimited RLIMIT_CORE unlimited unlimited RLIMIT_CPU unlimited unlimited RLIMIT_DATA unlimited unlimited RLIMIT_FSIZE unlimited unlimited RLIMIT_LOCKS unlimited unlimited RLIMIT_MEMLOCK 65536 65536 RLIMIT_NOFILE 65536 65536 RLIMIT_NPROC 131072 131072 \n\nFor most cases of older versions of Linux this va"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q013",
+      "question": "Can I apply a TIP 2.2 fix pack directly to a TIP 2.1 installation?\n\nCan I apply a TIP 2.2 fix pack directly to a TIP 2.1 installation?",
+      "answer": "In order to apply TIP 2.2 fix packs, the target TIP installation must already be at TIPCore 2.2.0 or newer. TIP 2.1 installations must be upgraded to TIP 2.2 using the TIP 2.2.0.1 feature pack.",
+      "is_impossible": false,
+      "contexts": [
+        {
+          "filename": "swg21618719.txt",
+          "text": "Title: IBM Applying TIP 2.2 fix packs directly to a TIP 2.1 installation - United States\n\nText:\nTIPL2; TIPL2INST; tivoli Integrated portal; feature pack TECHNOTE (FAQ)\n\nQUESTION\n Can Tivoli Integrated Portal 2.2 fix packs be applied directly to a TIP 2.1 installation?\n\n\nANSWER\nIn order to apply TIP 2.2 fix packs, the target TIP installation must already be at TIPCore 2.2.0 or newer. TIP 2.1 installations must be upgraded to TIP 2.2 using the TIP 2.2.0.1 feature pack. The TIP 2.2.0.1 feature pack can be acquired from IBM Fix Central [http://www-933.ibm.com/support/fixcentral/swg/selectFixes?parent=ibm~Tivoli&product=ibm/Tivoli/Tivoli+Integrated+Portal&release=All&platform=All&function=all]. \n\nThe following three items should be obtained from Fix Central: \n\n * 2.2.0.1-TIV-TIP-<platform>-RP0001 \n * 2.2.0.1-TIV-TIP-FITSuit-RP0001vx \n * 2201-fixpack-guide-PDF.pdf\n\n\n\nTo determine the installed TIPCore version, review the DE listIU command output. Details on the listIU command are included in the following technical note: \nhttp://www-01.ibm.com/support/docview.wss?uid=swg21615989 [http://www-01.ibm.com/support/docview.wss?uid=swg21615989]"
+        }
+      ]
+    },
+    {
+      "id": "TRAIN_Q002",
+      "question": "Why are replies going to the DLQ with reason 2189 MQRC_CLUSTER_RESOLUTION_ERROR\n\nI have changed my cluster receiver to match the IP address used and now I am seeing replies in my DLQ with 2189 MQRC_CLUSTER_RESOLUTION_ERROR. The reply queue is on a different cluster which this qmgr is a member of. The reply message uses replytoqmgr and queue name. The qmgr should see the replytoqmgr in the cluster and get the message over to the queue, but instead goes to dead letter queue. This queue manager is a repository to one cluster and a member of another.",
+      "answer": "-",
+      "is_impossible": true,
+      "contexts": []
+    },
+    {
+      "id": "TRAIN_Q004",
+      "question": "Help with Action required for IIB H.E. V9 & WMB H.E. V8 for security vulnerabilities in Red Hat Linux (CVE-2018-6551 CVE-2018-6485)\n\n\n\nI need to understand details regarding Action required for IBM Integration Bus Hypervisor Edition V9.0 and WebSphere Message Broker Hypervisor Edition V8.0 for security vulnerabilities in Red Hat Linux.\nThis is related to CVE-IDs:\nCVE-2018-6551\nCVE-2018-6485\n\nWhere can I find this information?",
+      "answer": "-",
+      "is_impossible": true,
+      "contexts": []
+    },
+    {
+      "id": "TRAIN_Q021",
+      "question": "Help with Action required for Hypervisor Edition of IIB V9.0 and WMB V8.0 for security vulnerabilities in Red Hat Linux\n\nI need to understand details regarding Action required for IBM Integration Bus Hypervisor Edition V9.0 and WebSphere Message Broker Hypervisor Edition V8.0 for security vulnerabilities in Red Hat Linux. Where can I find this information?",
+      "answer": "-",
+      "is_impossible": true,
+      "contexts": []
+    },
+    {
+      "id": "TRAIN_Q022",
+      "question": "Why is an error seen while running run-svrssl-config?\n\nFollowing error is seen while running run-svrssl-config ConfigEngine task:\n action-run-pdjrte-config-zos-wp.ac.impl: \n [validateHost] Validating hostname(s) in the following argument: tam001:7136:1,tam002:7136:2\n      [echo] Command to run is: java com.tivoli.pd.jcfg.SvrSslCfg -action config -admin_id sec_master -admin_pwd ****** -appsvr_id myAppSvr -port 7223 -mode remote -policysvr\n tam001:7135:1,tam002:7135:2 -authzsvr tam001:7136:1,tam002:7136:2 -cfg_file /opt/WebSphere/AppServer/tivoli/tam/PdPerm.properties -key_file /opt/WebSphere/AppServer/tivoli/tam/pdperm.ks\n      [java] Executing java with empty input string\n      [java] Exception in thread \"main\"\n      [java] [\n      [java] HPDMG0759W The user name already exists in the registry.\n      [java] ]\n      [java] at com.tivoli.pd.jutil.ob.a(ob.java:40)\n      [java] at com.tivoli.pd.jutil.ob.a(ob.java:66)",
+      "answer": "-",
+      "is_impossible": true,
+      "contexts": []
+    },
+    {
+      "id": "TRAIN_Q023",
+      "question": "Help with Action required for IIB H.E. V9 and WMB H.E. V8 for security vulnerabilities in Red Hat Linux\n\n\n\nI need to understand details regarding Action required for IBM Integration Bus Hypervisor Edition V9.0 and WebSphere Message Broker Hypervisor Edition V8.0 for security vulnerabilities in Red Hat Linux.\n\nThis is related to CVE-IDs:\nCVE-2017-5715\nCVE-2017-5753\nCVE-2017-5754\n\nWhere can I find this information?",
+      "answer": "-",
+      "is_impossible": true,
+      "contexts": []
+    },
+    {
+      "id": "TRAIN_Q025",
+      "question": "We are experiencing issues after we cleared the  /tmp/javasharedresources location and restarted the jvm.\n\n\n\nWe experienced an issue when we cleared the /tmp/javasharedresources location and restarted jvm. We found a behavior where our website is serving a blank page and also cache monitor is not reflecting the statistics.\n\nPlease help us to understand why we cannot clear the /tmp/javasharedresources ?",
+      "answer": "-",
+      "is_impossible": true,
+      "contexts": []
+    },
+    {
+      "id": "TRAIN_Q032",
+      "question": "WCM User can not access authorized content with this exception in SystemOut.log:  com.ibm.icm.jcr.access.AccessDeniedException\n\nWCM User can not access authorized content with this exception in SystemOut.log: com.ibm.icm.jcr.access.AccessDeniedException",
+      "answer": "-",
+      "is_impossible": true,
+      "contexts": []
+    },
+    {
+      "id": "TRAIN_Q035",
+      "question": "DataPower remote log targets, tracking efficieny\n\nHow can I track the efficiency of my log target (remote endpoint)?",
+      "answer": "-",
+      "is_impossible": true,
+      "contexts": []
+    }
+  ]
+}

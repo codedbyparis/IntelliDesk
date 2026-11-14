@@ -1,0 +1,10 @@
+SAMPLE DEMONSTRATION DOCUMENT - NOT AN OFFICIAL UNIVERSITY PROCEDURE
+Title: Account Security Troubleshooting (Sample)
+
+Problem: A sign-in or security prompt looks unexpected
+
+1. Do not approve a sign-in request that you did not initiate.
+2. Do not share a password, recovery code, or one-time code with anyone.
+3. Open the account portal using an address you already trust instead of a link in an unexpected message.
+4. If the account offers an official password-reset flow, use it from the trusted portal.
+5. Contact the IT helpdesk promptly if you suspect that the account is compromised.

@@ -31,7 +31,7 @@ def build_index():
     if not documents:
         print(
             f"No documents found in {config.KNOWLEDGE_BASE_DIR}. "
-            "Add .pdf or .txt files and try again."
+            "Add .pdf, .txt, or normalized .jsonl files and try again."
         )
         return False
 
@@ -46,18 +46,15 @@ def build_index():
     matrix = vectorizer.transform(token_lists)
     save_index(vectorizer, matrix, chunks)
 
-    files_per_label = Counter()
-    for source, label in {(chunk["source"], chunk["label"]) for chunk in chunks}:
-        files_per_label[label] += 1
+    documents_per_label = Counter(document["label"] for document in documents)
     chunks_per_label = Counter(chunk["label"] for chunk in chunks)
 
-    print(f"Files read : {sum(files_per_label.values())}")
-    print(f"Pages read : {len(documents)}")
+    print(f"Documents : {len(documents)}")
     print(f"Chunks     : {len(chunks)}")
     print(f"Vocabulary : {len(vectorizer.vocabulary)} words")
     for label in (config.LABEL_SAMPLE, config.LABEL_VERIFIED):
         print(
-            f"  {label:<9}: {files_per_label[label]} file(s), "
+            f"  {label:<9}: {documents_per_label[label]} document(s), "
             f"{chunks_per_label[label]} chunk(s)"
         )
     if chunks_per_label[config.LABEL_VERIFIED] == 0:
