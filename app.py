@@ -1,5 +1,5 @@
 """Streamlit chat interface for the IntelliDesk helpdesk assistant."""
-
+import re
 import sqlite3
 
 import streamlit as st

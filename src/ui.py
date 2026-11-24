@@ -23,7 +23,6 @@ THEME_CSS = """
   --blue-dark: #355fc8;
   --teal: #24a58a;
 }
-
 .stApp {
   color: var(--ink);
   background: var(--canvas);
@@ -36,7 +35,6 @@ THEME_CSS = """
   max-width: 1360px;
   padding: 2rem 2.5rem 5.5rem;
 }
-
 [data-testid="stSidebar"] {
   background: var(--navy);
   border-right: 1px solid #26344b;
@@ -49,9 +47,7 @@ THEME_CSS = """
   padding: 1rem .85rem 1.2rem;
 }
 [data-testid="stSidebarNav"] { display: none; }
-[data-testid="stSidebar"] [data-testid="stPageLink"] {
-  margin: .15rem 0;
-}
+[data-testid="stSidebar"] [data-testid="stPageLink"] { margin: .15rem 0; }
 [data-testid="stSidebar"] [data-testid="stPageLink"] a {
   min-height: 2.45rem;
   border-radius: .65rem;
@@ -62,18 +58,13 @@ THEME_CSS = """
   background: #1d2b43;
   color: #fff;
 }
-[data-testid="stSidebar"] .stButton button {
-  border-radius: .7rem;
-}
+[data-testid="stSidebar"] .stButton button { border-radius: .7rem; }
 [data-testid="stSidebar"] .stButton button[kind="primary"] {
   background: var(--blue);
   border-color: var(--blue);
   color: white;
 }
-[data-testid="stSidebar"] hr {
-  border-color: #29374e;
-}
-
+[data-testid="stSidebar"] hr { border-color: #29374e; }
 .brand-lockup {
   display: flex;
   align-items: center;
@@ -133,7 +124,6 @@ THEME_CSS = """
 }
 .profile-title { color: #e4eaf3; font-size: .78rem; font-weight: 650; }
 .profile-meta { color: #8fa0b8; font-size: .67rem; }
-
 .page-eyebrow {
   margin-bottom: .35rem;
   color: var(--blue-dark);
@@ -146,7 +136,6 @@ h1, h2, h3 { letter-spacing: -.035em; }
 h1 { color: var(--ink); font-weight: 720; }
 h2, h3 { color: #202b40; font-weight: 680; }
 [data-testid="stCaptionContainer"] { color: var(--muted); }
-
 [data-testid="stMetric"] {
   padding: 1rem 1.05rem;
   border: 1px solid var(--line);
@@ -156,7 +145,6 @@ h2, h3 { color: #202b40; font-weight: 680; }
 }
 [data-testid="stMetricLabel"] { color: var(--muted); font-weight: 600; }
 [data-testid="stMetricValue"] { color: var(--ink); font-weight: 720; }
-
 .stButton button, [data-testid="stFormSubmitButton"] button {
   border-radius: .7rem;
   font-weight: 620;
@@ -176,7 +164,6 @@ button[kind="primary"]:hover {
   background: var(--blue-dark);
   border-color: var(--blue-dark);
 }
-
 [data-testid="stChatMessage"] {
   margin: .7rem 0;
   padding: .9rem 1rem;
@@ -198,7 +185,6 @@ button[kind="primary"]:hover {
   background: var(--surface);
 }
 [data-testid="stAlert"] { border-radius: .8rem; }
-
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -212,10 +198,7 @@ button[kind="primary"]:hover {
 .status-open { color: #9a5a08; background: #fff3d8; }
 .status-in-progress { color: #315eb7; background: #e9f0ff; }
 .status-resolved { color: #14785f; background: #e1f5ee; }
-.ticket-card {
-  margin: .4rem 0 .7rem;
-  padding: .15rem .1rem;
-}
+.ticket-card { margin: .4rem 0 .7rem; padding: .15rem .1rem; }
 .source-note {
   padding: .65rem .8rem;
   border-left: 3px solid #e6a43b;
@@ -225,29 +208,127 @@ button[kind="primary"]:hover {
   font-size: .82rem;
 }
 
+/* Authentication screen */
+.auth-shell {
+  max-width: 980px;
+  margin: 2.2rem auto 3rem;
+}
+.auth-hero {
+  min-height: 540px;
+  height: 100%;
+  padding: 2.6rem 2.3rem;
+  border-radius: 1.35rem;
+  color: #f8fafc;
+  background:
+    radial-gradient(circle at 85% 12%, rgba(91, 137, 255, .34), transparent 31%),
+    linear-gradient(145deg, #101a2d 0%, #172b4b 58%, #1e3b67 100%);
+  box-shadow: 0 22px 55px rgba(16, 26, 45, .16);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-size: 1.18rem;
+  font-weight: 750;
+  letter-spacing: -.025em;
+}
+.auth-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: .9rem;
+  background: #4774e8;
+  color: white;
+  font-weight: 800;
+}
+.auth-hero h2 {
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  line-height: 1.08;
+  margin: 2.2rem 0 1rem;
+}
+.auth-hero p {
+  color: #c5d2e7;
+  font-size: .98rem;
+  line-height: 1.7;
+  max-width: 28rem;
+}
+.auth-feature {
+  margin-top: 1.5rem;
+  padding: .9rem 1rem;
+  border: 1px solid rgba(210, 225, 255, .18);
+  border-radius: .85rem;
+  background: rgba(255, 255, 255, .07);
+  color: #e6eefb;
+  font-size: .86rem;
+}
+.auth-foot {
+  color: #9fb1cd;
+  font-size: .74rem;
+  letter-spacing: .04em;
+}
+.auth-form-panel {
+  min-height: 540px;
+  padding: 2.3rem 2rem;
+  border: 1px solid #e5eaf2;
+  border-radius: 1.35rem;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(20, 35, 60, .07);
+}
+.auth-form-panel h3 {
+  color: #172033;
+  font-size: 1.65rem;
+  margin: .4rem 0 .35rem;
+}
+.auth-kicker {
+  color: #4774e8;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.auth-subtitle {
+  color: #64748b;
+  font-size: .88rem;
+  line-height: 1.55;
+  margin-bottom: 1.2rem;
+}
+.auth-form-panel [data-testid="stTabs"] button {
+  font-weight: 650;
+}
+.auth-form-panel [data-testid="stTextInput"] label {
+  color: #344158;
+  font-weight: 620;
+}
+.auth-form-panel [data-testid="stFormSubmitButton"] button {
+  min-height: 2.8rem;
+}
 @media (max-width: 900px) {
   [data-testid="stMainBlockContainer"] { padding: 1.5rem 1.25rem 5rem; }
-  [data-testid="stHorizontalBlock"] {
-    flex-wrap: wrap;
-    gap: .75rem;
-  }
+  [data-testid="stHorizontalBlock"] { flex-wrap: wrap; gap: .75rem; }
   [data-testid="stHorizontalBlock"] [data-testid="stColumn"] {
     min-width: calc(50% - .5rem) !important;
     flex: 1 1 calc(50% - .5rem);
   }
+  .auth-shell { margin-top: .5rem; }
+  .auth-hero, .auth-form-panel { min-height: auto; }
+  .auth-hero { padding: 2rem; gap: 2rem; }
 }
 @media (max-width: 640px) {
   [data-testid="stMainBlockContainer"] { padding: 1.25rem .9rem 5rem; }
-  [data-testid="stHorizontalBlock"] {
-    flex-wrap: wrap;
-    gap: .65rem;
-  }
+  [data-testid="stHorizontalBlock"] { flex-wrap: wrap; gap: .65rem; }
   [data-testid="stHorizontalBlock"] [data-testid="stColumn"] {
     min-width: min(100%, 15rem) !important;
     flex: 1 1 14rem;
   }
   h1 { font-size: 1.8rem !important; }
   [data-testid="stChatMessage"] { padding: .72rem .8rem; }
+  .auth-hero, .auth-form-panel { padding: 1.5rem; border-radius: 1rem; }
+  .auth-hero h2 { font-size: 2rem; }
 }
 </style>
 """
@@ -273,64 +354,120 @@ def get_classifier():
 
 
 def render_auth_gate():
-    """Render login/registration and return the authenticated account, if any."""
+    """Render the branded login/registration screen and return the account."""
     user = st.session_state.get("current_user")
     if user:
         return user
 
-    st.title("Welcome to IntelliDesk")
-    st.caption("Sign in to your private helpdesk workspace or create a user account.")
-    login_tab, register_tab = st.tabs(["Sign in", "Create account"])
+    left, right = st.columns([1.05, 0.95], gap="large")
 
-    with login_tab:
-        with st.form("login-form"):
-            username = st.text_input("Username", key="login-username")
-            password = st.text_input(
-                "Password", type="password", key="login-password"
-            )
-            submitted = st.form_submit_button("Sign in", type="primary")
-        if submitted:
-            try:
-                user = authenticate_user(username, password)
-            except sqlite3.Error as error:
-                st.error(f"Could not sign in because local storage failed: {error}")
-            else:
-                if user is None:
-                    st.error("Username or password is incorrect.")
-                else:
-                    st.session_state["current_user"] = user
-                    st.rerun()
-
-    with register_tab:
-        st.caption(
-            "User accounts cannot create or grant administrator privileges. "
-            "An administrator must be provisioned from the project terminal."
+    with left:
+        st.markdown(
+            """
+            <section class="auth-hero">
+              <div>
+                <div class="auth-brand">
+                  <div class="auth-brand-mark">ID</div>
+                  <span>IntelliDesk</span>
+                </div>
+                <h2>Your campus IT support, in one place.</h2>
+                <p>
+                  Get guided help for campus technology issues, find useful
+                  troubleshooting information, and keep track of support requests.
+                </p>
+                <div class="auth-feature">✦ &nbsp; AI-assisted IT support</div>
+                <div class="auth-feature">✦ &nbsp; Guided troubleshooting and ticket tracking</div>
+                <div class="auth-feature">✦ &nbsp; One workspace for campus support</div>
+              </div>
+              <div class="auth-foot">CAMPUS IT SUPPORT WORKSPACE</div>
+            </section>
+            """,
+            unsafe_allow_html=True,
         )
-        with st.form("register-form"):
-            username = st.text_input("Choose a username", key="register-username")
-            password = st.text_input(
-                "Choose a password",
-                type="password",
-                help="Use 12–256 characters.",
-                key="register-password",
+
+    with right:
+        with st.container(border=True):
+            st.markdown(
+                """
+                <div class="auth-kicker">SECURE WORKSPACE ACCESS</div>
+                <h3>Welcome back</h3>
+                <div class="auth-subtitle">
+                  Sign in to continue to your IntelliDesk workspace,
+                  or create a user account to get started.
+                </div>
+                """,
+                unsafe_allow_html=True,
             )
-            confirmation = st.text_input(
-                "Confirm password",
-                type="password",
-                key="register-password-confirm",
-            )
-            submitted = st.form_submit_button("Create account", type="primary")
-        if submitted:
-            if password != confirmation:
-                st.error("The passwords do not match.")
-            else:
-                try:
-                    user = register_user(username, password)
-                except (ValueError, sqlite3.Error) as error:
-                    st.error(f"Could not create the account: {error}")
-                else:
-                    st.session_state["current_user"] = user
-                    st.rerun()
+            login_tab, register_tab = st.tabs(["Sign in", "Create account"])
+
+            with login_tab:
+                with st.form("login-form"):
+                    username = st.text_input("Username", key="login-username")
+                    password = st.text_input(
+                        "Password", type="password", key="login-password"
+                    )
+                    submitted = st.form_submit_button(
+                        "Sign in to IntelliDesk",
+                        type="primary",
+                        use_container_width=True,
+                    )
+                if submitted:
+                    try:
+                        user = authenticate_user(username, password)
+                    except sqlite3.Error as error:
+                        st.error(
+                            f"Could not sign in because local storage failed: {error}"
+                        )
+                    else:
+                        if user is None:
+                            st.error("Username or password is incorrect.")
+                        else:
+                            st.session_state["current_user"] = user
+                            st.rerun()
+
+            with register_tab:
+                st.caption(
+                    "User accounts cannot create or grant administrator privileges. "
+                    "An administrator must be provisioned from the project terminal."
+                )
+                with st.form("register-form"):
+                    username = st.text_input(
+                        "Choose a username", key="register-username"
+                    )
+                    password = st.text_input(
+                        "Choose a password",
+                        type="password",
+                        help="Use 12–256 characters.",
+                        key="register-password",
+                    )
+                    confirmation = st.text_input(
+                        "Confirm password",
+                        type="password",
+                        key="register-password-confirm",
+                    )
+                    submitted = st.form_submit_button(
+                        "Create account",
+                        type="primary",
+                        use_container_width=True,
+                    )
+                if submitted:
+                    if password != confirmation:
+                        st.error("The passwords do not match.")
+                    else:
+                        try:
+                            user = register_user(username, password)
+                        except (ValueError, sqlite3.Error) as error:
+                            st.error(f"Could not create the account: {error}")
+                        else:
+                            st.session_state["current_user"] = user
+                            st.rerun()
+
+    st.markdown(
+        '<div style="text-align:center;color:#94a3b8;font-size:.75rem;'
+        'margin-top:1.2rem;">Your account and support data stay in this local '
+        'IntelliDesk installation.</div>',
+        unsafe_allow_html=True,
+    )
     return None
 
 
@@ -341,7 +478,10 @@ def apply_theme():
 
 def render_page_header(eyebrow, title, description):
     """Render a consistent page title and supporting description."""
-    st.markdown(f'<div class="page-eyebrow">{escape(eyebrow)}</div>', unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="page-eyebrow">{escape(eyebrow)}</div>',
+        unsafe_allow_html=True,
+    )
     st.title(title)
     st.caption(description)
 
@@ -370,13 +510,19 @@ def render_sidebar(user):
             st.session_state.pop("ticket_notice", None)
             st.switch_page("app.py")
 
-        st.markdown('<div class="sidebar-section-label">Workspace</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="sidebar-section-label">Workspace</div>',
+            unsafe_allow_html=True,
+        )
         for page, label, icon in PAGES:
             if label == "Dashboard" and user["role"] != "admin":
                 continue
             st.page_link(page, label=label, icon=icon)
 
-        st.markdown('<div class="sidebar-section-label">Recent conversations</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="sidebar-section-label">Recent conversations</div>',
+            unsafe_allow_html=True,
+        )
         conversations = list_conversations(limit=6, user_id=user["id"])
         if conversations:
             for conversation in conversations:
