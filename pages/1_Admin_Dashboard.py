@@ -3,7 +3,7 @@
 import streamlit as st
 
 from src import config
-from src.database import init_db
+from src.database import get_connection, init_db
 from src.ticket_manager import (
     get_statistics,
     list_tickets,
@@ -153,6 +153,57 @@ def main():
         st.caption(
             "No context-helpfulness ratings have been submitted. Context coverage "
             "measures attachment presence, not the quality of the IT resolution."
+        )
+
+    st.subheader("Frequently Asked Questions")
+    st.caption(
+        "Questions submitted by users through the IntelliDesk chatbot, "
+        "ranked by how often the same question was asked."
+    )
+
+    with get_connection() as connection:
+        faq_rows = connection.execute(
+            """
+            SELECT
+                MIN(TRIM(content)) AS question,
+                COUNT(*) AS times_asked,
+                COUNT(DISTINCT conversation_id) AS conversation_count
+            FROM messages
+            WHERE role = 'user'
+              AND TRIM(content) <> ''
+            GROUP BY LOWER(TRIM(content))
+            ORDER BY times_asked DESC, question COLLATE NOCASE ASC
+            LIMIT 10
+            """
+        ).fetchall()
+
+    if faq_rows:
+        faq_total = sum(row["times_asked"] for row in faq_rows)
+        faq_columns = st.columns(3)
+        faq_columns[0].metric("Question patterns", len(faq_rows))
+        faq_columns[1].metric("Questions represented", faq_total)
+        faq_columns[2].metric("Most asked count", faq_rows[0]["times_asked"])
+
+        st.dataframe(
+            [
+                {
+                    "Question": row["question"],
+                    "Times asked": row["times_asked"],
+                    "Different conversations": row["conversation_count"],
+                }
+                for row in faq_rows
+            ],
+            hide_index=True,
+            width="stretch",
+        )
+        st.caption(
+            "Matching ignores capitalization and leading/trailing spaces. "
+            "Questions with different wording are counted separately."
+        )
+    else:
+        st.info(
+            "No questions have been recorded yet. Questions will appear here "
+            "after users interact with IntelliDesk."
         )
 
     st.subheader("Recent tickets")
